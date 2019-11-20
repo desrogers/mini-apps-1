@@ -33,8 +33,10 @@
         id="json-form"
         method="POST"
         target="csv-output"
-        enctype="application/x-www-form-urlencoded">
-          <textarea name="textarea" cols="60" rows="25" required></textarea>
+        enctype="multipart/form-data"
+      >
+          <label for="jsonfile">Choose file to upload</label>
+          <input type="file" id="jsonfile" name="jsonfile" accept=".json">
           <input type="submit" value="Submit" />
       </form>
     </div>
@@ -43,6 +45,7 @@
       <iframe src="" frameborder="1" name="csv-output" width="600" height="200"></iframe>
     </div>
   </section>
+  <script src='app.js'></script>
 </body>
 </html>
 
