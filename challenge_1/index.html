@@ -1,2 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Tic Tac Toe</title>
+  </head>
+  <style media="screen">
+    body {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .board {
+      display: inline-grid;
+      grid-template: repeat(3, 100px) / repeat(3, 100px);
+      grid-template-areas:
+        "  r1c1  r1c2  r1c3  "
+        "  r2c1  r2c2  r2c3  "
+        "  r3c1  r3c2  r3c3  ";
+      gap: 5px 5px;
+    }
 
+    .cell {
+      border: solid black 2px;
+      height: 100px;
+      width: 100px;
+    }
+
+    #row1_col1 {
+      grid-area: r1c1;
+    }
+    #row1_col2 {
+      grid-area: r1c2;
+    }
+    #row1_col3 {
+      grid-area: r1c3;
+    }
+    #row2_col1 {
+      grid-area: r2c1;
+    }
+    #row2_col2 {
+      grid-area: r2c2;
+    }
+    #row2_col3 {
+      grid-area: r2c3;
+    }
+    #row3_col1 {
+      grid-area: r3c1;
+    }
+    #row3_col2 {
+      grid-area: r3c2;
+    }
+    #row3_col3 {
+      grid-area: r3c3;
+    }
+  </style>
+  <body>
+    <div class="board">
+      <div class="cell" id="row1_col1"></div>
+      <div class="cell" id="row1_col2"></div>
+      <div class="cell" id="row1_col3"></div>
+      <div class="cell" id="row2_col1"></div>
+      <div class="cell" id="row2_col2"></div>
+      <div class="cell" id="row2_col3"></div>
+      <div class="cell" id="row3_col1"></div>
+      <div class="cell" id="row3_col2"></div>
+      <div class="cell" id="row3_col3"></div>
+    </div>
+
+  </body>
+  <script src="app.js" charset="utf-8"></script>
+</html>
 
