@@ -36,6 +36,7 @@
     };
 
     // TODO: display result alert
+    const alert = () => {};
 
     // listen for click event on .cell elements
     document.querySelectorAll('.cell').forEach((cell, i) => {
@@ -43,7 +44,7 @@
     });
 
     return {
-      reset, markCell
+      reset, markCell, alert
     }
   }
 
