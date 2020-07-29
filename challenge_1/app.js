@@ -12,11 +12,16 @@
 
   const Board = () => {
     let matrix = [
-      [-1,-1,-1],[-1,-1,-1],[-1,-1,-1]
+      [-1, -1, -1],
+      [-1, -1, -1],
+      [-1, -1, -1]
     ];
 
     const mark = (coords, mark) => {
-      const nums = { 'x': 1, 'o': 0 };
+      const nums = {
+        'x': 1,
+        'o': 0
+      };
       const row = parseInt(coords[3]) - 1;
       const col = parseInt(coords[8]) - 1;
       if (matrix[row][col] < 0) {
@@ -56,10 +61,18 @@
       return hasRowWin() || hasColWin() || hasDiagWin();
     }
 
-    const clearBoard = () => { matrix = [ [-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ]; };
+    const clearBoard = () => {
+      matrix = [
+        [-1, -1, -1],
+        [-1, -1, -1],
+        [-1, -1, -1]
+      ];
+    };
 
     return {
-      mark, detectWin, clearBoard
+      mark,
+      detectWin,
+      clearBoard
     };
   }
 
@@ -75,19 +88,25 @@
     };
 
     const swap = () => {
-        x.swapTurn();
-        o.swapTurn();
+      x.swapTurn();
+      o.swapTurn();
     };
 
     return {
-      players: { hasTurn, swap },
+      players: {
+        hasTurn,
+        swap
+      },
       board
     }
   }
 
   const Controller = () => {
     const view = View();
-    const { players, board } = Model();
+    const {
+      players,
+      board
+    } = Model();
     let turnsTotal = 1;
 
     const reset = () => {
@@ -172,7 +191,10 @@
       }
     };
     return {
-      clear, reset, alert, mark
+      clear,
+      reset,
+      alert,
+      mark
     }
   }
 
@@ -190,4 +212,3 @@
   const newGame = Game();
   newGame.play();
 })();
-
