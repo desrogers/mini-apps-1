@@ -8,12 +8,14 @@
   };
 
   const Display = ({ x, o }) => {
+    const view = View();
     let turnsTotal = 1;
     let currentPlayer = x.isTurn ? x : o;
 
     const switchPlayer = () => {
       if (turnsTotal > 8) {
-        alert();
+        view.alert();
+        turnsTotal = 1;
         return;
       }
 
@@ -35,17 +37,26 @@
       }
     };
 
+    // listen for click event on .cell elements
+    document.querySelectorAll('.cell').forEach((cell, i) => {
+      cell.addEventListener('click', markCell);
+    });
+
+    return;
+  }
+
+  const View = () => {
     // clear all cells
     const clear = () => {
       document.querySelectorAll('.cell').forEach((item, i) => {
         item.innerHTML = "";
       });
-      turnsTotal = 1;
     };
 
     // display reset button
     const reset = () => {
       const btnWrapper = document.querySelector('.btn-wrapper');
+      if (btnWrapper.hasChildNodes()) return;
       const btn = document.createElement('button');
       btn.innerHTML = 'reset';
       btn.addEventListener('click', clear);
@@ -63,14 +74,8 @@
         reset();
       }
     };
-
-    // listen for click event on .cell elements
-    document.querySelectorAll('.cell').forEach((cell, i) => {
-      cell.addEventListener('click', markCell);
-    });
-
     return {
-      reset, markCell, alert
+      clear, reset, alert
     }
   }
 
