@@ -28,7 +28,7 @@
       });
     };
 
-    // TODO: display reset button
+    // display reset button
     const reset = () => {
       const btnWrapper = document.querySelector('.btn-wrapper');
       const btn = document.createElement('button');
@@ -37,8 +37,13 @@
       btnWrapper.appendChild(btn);
     };
 
-    // TODO: display result alert
-    const alert = () => {};
+    // Display alert with round result and confirmation to continue
+    // Falsy input displays a tie.
+    const alert = (player) => {
+      const result = player ? `${player} wins!` : `It's a tie.`;
+      const message = `${result} Best out of Three?`
+      return confirm(message);
+    };
 
     // listen for click event on .cell elements
     document.querySelectorAll('.cell').forEach((cell, i) => {
