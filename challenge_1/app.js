@@ -11,22 +11,69 @@
   };
 
   const Board = () => {
-    const matrix = [
-      [,,],[,,],[,,]
+    let matrix = [
+      [-1,-1,-1],[-1,-1,-1],[-1,-1,-1]
     ];
 
     const mark = (coords, mark) => {
       const nums = { 'x': 1, 'o': 0 };
       const row = parseInt(coords[3]) - 1;
       const col = parseInt(coords[8]) - 1;
-      if (!matrix[row][col]) {
+      if (matrix[row][col] < 0) {
         matrix[row][col] = nums[mark];
       }
     };
 
-    return {
-      mark
+    const traverse = (array) => {
+      let hasWin = false;
+      array.forEach((row, i) => {
+        const el = row[0];
+        if (row.every((item) => item != -1 && item === el)) {
+          hasWin = true;
+          return;
+        };
+      });
+      return hasWin;
     }
+
+    const hasRowWin = () => traverse(matrix);
+
+    const hasColWin = () => {
+      let hasWin = false;
+      matrix[0].forEach((col, i) => {
+        const array = [matrix[0][i], matrix[1][i], matrix[2][i]];
+        const el = array[0];
+        if (array.every((item) => item != -1 && item === el)) {
+          hasWin = true;
+          return;
+        }
+      });
+      return hasWin;
+    };
+
+    const hasDiagWin = () => {
+      const diags = [
+        [matrix[0][0], matrix[1][1], matrix[2][2]],
+        [matrix[2][0], matrix[1][1], matrix[0][2]]
+      ];
+
+      return traverse(diags);
+    };
+
+    const detectWin = () => {
+      // check horizontal, vertical, diagonal
+      return hasRowWin() || hasColWin() || hasDiagWin();
+    }
+
+    const clearBoard = () => {
+      matrix = [
+        [-1,-1,-1],[-1,-1,-1],[-1,-1,-1]
+      ];
+    };
+
+    return {
+      mark, detectWin, clearBoard
+    };
   }
 
   const Model = () => {
@@ -56,10 +103,22 @@
     const { players, board } = Model();
     let turnsTotal = 1;
 
+    const reset = () => {
+      turnsTotal = 1;
+      board.clearBoard();
+    };
+
     const handleTurn = () => {
+      if (turnsTotal >= 5 && board.detectWin()) {
+        const currentPlayer = players.hasTurn();
+        view.alert(currentPlayer.mark);
+        reset();
+        return;
+      }
+
       if (turnsTotal > 8) {
         view.alert();
-        turnsTotal = 1;
+        reset();
         return;
       }
 
@@ -131,14 +190,10 @@
   }
 
   const Game = () => {
-
     // players keep their scores, unless the entire game/page is refreshed
     const play = () => {
       Controller();
     };
-
-    // TODO:
-    const detectWin = () => {}
 
     return {
       play
