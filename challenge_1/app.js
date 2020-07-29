@@ -1,16 +1,37 @@
 (function TicTacToe() {
-  const Player = (mark) => {
-    const obj = {};
-    obj.mark = mark;
-    obj.isTurn = false;
-    obj.score = 0;
-    return obj;
-  };
 
-  const Display = ({ x, o }) => {
+  const Model = () => {
+    const Player = (mark) => {
+      const obj = {};
+      obj.mark = mark;
+      obj.isTurn = false;
+      obj.score = 0;
+      return obj;
+    };
+
+    const x = Player('x');
+    const o = Player('o');
+
+    x.isTurn = true;
+
+    const hasTurn = () => {
+      return x.isTurn ? x : o;
+    };
+
+    const swap = () => {
+        x.isTurn = !x.isTurn;
+        o.isTurn = !o.isTurn;
+    };
+
+    return {
+      hasTurn, swap
+    }
+  }
+
+  const Controller = () => {
     const view = View();
+    const users = Model();
     let turnsTotal = 1;
-    let currentPlayer = x.isTurn ? x : o;
 
     const switchPlayer = () => {
       if (turnsTotal > 8) {
@@ -20,33 +41,31 @@
       }
 
       turnsTotal += 1;
-      currentPlayer === x ? currentPlayer = o : currentPlayer = x;
+      users.swap();
     };
 
     // display Xs and Os
-    const markCell = () => {
+    const handleClick = () => {
       const target = document.getElementById(event.target.id);
+      const currentPlayer = users.hasTurn();
 
       // add mark only if target cell/div empty
       if (!target.hasChildNodes()) {
-        const node = document.createElement('P');
-        const textNode = document.createTextNode(currentPlayer.mark);
-        node.appendChild(textNode);
-        target.appendChild(node);
+        view.mark(target, currentPlayer.mark);
         switchPlayer();
       }
     };
 
     // listen for click event on .cell elements
     document.querySelectorAll('.cell').forEach((cell, i) => {
-      cell.addEventListener('click', markCell);
+      cell.addEventListener('click', handleClick);
     });
 
     return;
   }
 
   const View = () => {
-    const mark = (mark) => {
+    const mark = (target, mark) => {
       const node = document.createElement('P');
       const textNode = document.createTextNode(mark);
       node.appendChild(textNode);
@@ -90,7 +109,7 @@
 
     // players keep their scores, unless the entire game/page is refreshed
     const play = () => {
-      const view = Display({ x, o });
+      Controller();
     };
 
     // TODO:
