@@ -7,17 +7,31 @@
     return obj;
   };
 
-  const Display = () => {
-    // TODO: display Xs and Os
+  const Display = ({ x, o }) => {
+    let turnsTotal = 1;
+    let currentPlayer = x.isTurn ? x : o;
+
+    const switchPlayer = () => {
+      if (turnsTotal > 8) {
+        alert();
+        return;
+      }
+
+      turnsTotal += 1;
+      currentPlayer === x ? currentPlayer = o : currentPlayer = x;
+    };
+
+    // display Xs and Os
     const markCell = () => {
       const target = document.getElementById(event.target.id);
 
       // add mark only if target cell/div empty
       if (!target.hasChildNodes()) {
         const node = document.createElement('P');
-        const textNode = document.createTextNode('x')
+        const textNode = document.createTextNode(currentPlayer.mark);
         node.appendChild(textNode);
         target.appendChild(node);
+        switchPlayer();
       }
     };
 
@@ -26,6 +40,7 @@
       document.querySelectorAll('.cell').forEach((item, i) => {
         item.innerHTML = "";
       });
+      turnsTotal = 1;
     };
 
     // display reset button
@@ -42,7 +57,11 @@
     const alert = (player) => {
       const result = player ? `${player} wins!` : `It's a tie.`;
       const message = `${result} Best out of Three?`
-      return confirm(message);
+      if (confirm(message)) {
+        clear();
+      } else {
+        reset();
+      }
     };
 
     // listen for click event on .cell elements
@@ -56,24 +75,15 @@
   }
 
   const Game = () => {
-    let currentPlayer;
-    let turnsTotal = 0;
     const x = Player('x');
     const o = Player('o');
-    const view = Display();
+
+    x.isTurn = true;
 
     // players keep their scores, unless the entire game/page is refreshed
     const play = () => {
-      turnsTotal = 0;
-      currentPlayer = x;
+      const view = Display({ x, o });
     };
-
-    const reset = () => { play(); }
-
-    const switchPlayer = () => {
-      turnsTotal += 1;
-      currentPlayer === x ? currentPlayer = o : currentPlayer = x;
-    }
 
     // TODO:
     const detectWin = () => {}
