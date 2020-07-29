@@ -5,11 +5,18 @@
     <title>Tic Tac Toe</title>
   </head>
   <style media="screen">
-    body {
-      text-align: center;
-      margin-top: 40px;
+    .container {
+      display: grid;
+      grid-template:
+        ". board ." 400px
+        ".  btn  ." 60px
+        / auto 400px auto;
+      justify-items: center;
     }
+
     .board {
+      grid-area: board;
+      place-self: center;
       display: inline-grid;
       grid-template: repeat(3, 100px) / repeat(3, 100px);
       grid-template-areas:
@@ -23,6 +30,7 @@
       border: solid black 2px;
       height: 100px;
       width: 100px;
+      text-align: center;
     }
 
     #row1_col1 {
@@ -52,20 +60,26 @@
     #row3_col3 {
       grid-area: r3c3;
     }
+
+    .btn-wrapper {
+      grid-area: btn;
+    }
   </style>
   <body>
-    <div class="board">
-      <div class="cell" id="row1_col1"></div>
-      <div class="cell" id="row1_col2"></div>
-      <div class="cell" id="row1_col3"></div>
-      <div class="cell" id="row2_col1"></div>
-      <div class="cell" id="row2_col2"></div>
-      <div class="cell" id="row2_col3"></div>
-      <div class="cell" id="row3_col1"></div>
-      <div class="cell" id="row3_col2"></div>
-      <div class="cell" id="row3_col3"></div>
+    <div class="container">
+      <div class="board">
+        <div class="cell" id="row1_col1"></div>
+        <div class="cell" id="row1_col2"></div>
+        <div class="cell" id="row1_col3"></div>
+        <div class="cell" id="row2_col1"></div>
+        <div class="cell" id="row2_col2"></div>
+        <div class="cell" id="row2_col3"></div>
+        <div class="cell" id="row3_col1"></div>
+        <div class="cell" id="row3_col2"></div>
+        <div class="cell" id="row3_col3"></div>
+      </div>
+      <div class="btn-wrapper"></div>
     </div>
-
   </body>
   <script src="app.js" charset="utf-8"></script>
 </html>
