@@ -21,9 +21,11 @@
       }
     };
 
-    // TODO: clear all cells
+    // clear all cells
     const clear = () => {
-      console.log('Cleared');
+      document.querySelectorAll('.cell').forEach((item, i) => {
+        item.innerHTML = "";
+      });
     };
 
     // TODO: display reset button
