@@ -10,9 +10,29 @@
     return obj;
   };
 
+  const Board = () => {
+    const matrix = [
+      [,,],[,,],[,,]
+    ];
+
+    const mark = (coords, mark) => {
+      const nums = { 'x': 1, 'o': 0 };
+      const row = parseInt(coords[3]) - 1;
+      const col = parseInt(coords[8]) - 1;
+      if (!matrix[row][col]) {
+        matrix[row][col] = nums[mark];
+      }
+    };
+
+    return {
+      mark
+    }
+  }
+
   const Model = () => {
     const x = Player('x');
     const o = Player('o');
+    const board = Board();
 
     x.isTurn = true;
 
@@ -26,16 +46,17 @@
     };
 
     return {
-      users: { hasTurn, swap }
+      players: { hasTurn, swap },
+      board
     }
   }
 
   const Controller = () => {
     const view = View();
-    const { users } = Model();
+    const { players, board } = Model();
     let turnsTotal = 1;
 
-    const switchPlayer = () => {
+    const handleTurn = () => {
       if (turnsTotal > 8) {
         view.alert();
         turnsTotal = 1;
@@ -43,18 +64,20 @@
       }
 
       turnsTotal += 1;
-      users.swap();
+      players.swap();
     };
 
     // display Xs and Os
     const handleClick = () => {
-      const target = document.getElementById(event.target.id);
-      const currentPlayer = users.hasTurn();
+      const id = event.target.id;
+      const target = document.getElementById(id);
+      const currentPlayer = players.hasTurn();
 
       // add mark only if target cell/div empty
       if (!target.hasChildNodes()) {
         view.mark(target, currentPlayer.mark);
-        switchPlayer();
+        board.mark(id, currentPlayer.mark);
+        handleTurn();
       }
     };
 
