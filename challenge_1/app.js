@@ -9,6 +9,23 @@
 
   const Display = () => {
     // TODO: display Xs and Os
+    const markCell = () => {
+      const target = document.getElementById(event.target.id);
+
+      // add mark only if target cell/div empty
+      if (!target.hasChildNodes()) {
+        const node = document.createElement("P");
+        const textNode = document.createTextNode("x")
+        node.appendChild(textNode);
+        target.appendChild(node);
+      }
+    }
+
+    // listen for click event on .cell elements
+    document.querySelectorAll('.cell').forEach((cell, i) => {
+      cell.addEventListener("click", markCell);
+    });
+
     // TODO: display reset option
     // TODO: display alert
   }
