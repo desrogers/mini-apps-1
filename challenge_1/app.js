@@ -1,14 +1,16 @@
 (function TicTacToe() {
+  const Player = (mark) => {
+    const obj = {};
+    obj.mark = mark;
+    obj.isTurn = false;
+    obj.score = 0;
+    obj.swapTurn = () => {
+      obj.isTurn = !obj.isTurn
+    }
+    return obj;
+  };
 
   const Model = () => {
-    const Player = (mark) => {
-      const obj = {};
-      obj.mark = mark;
-      obj.isTurn = false;
-      obj.score = 0;
-      return obj;
-    };
-
     const x = Player('x');
     const o = Player('o');
 
@@ -19,18 +21,18 @@
     };
 
     const swap = () => {
-        x.isTurn = !x.isTurn;
-        o.isTurn = !o.isTurn;
+        x.swapTurn();
+        o.swapTurn();
     };
 
     return {
-      hasTurn, swap
+      users: { hasTurn, swap }
     }
   }
 
   const Controller = () => {
     const view = View();
-    const users = Model();
+    const { users } = Model();
     let turnsTotal = 1;
 
     const switchPlayer = () => {
