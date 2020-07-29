@@ -14,20 +14,37 @@
 
       // add mark only if target cell/div empty
       if (!target.hasChildNodes()) {
-        const node = document.createElement("P");
-        const textNode = document.createTextNode("x")
+        const node = document.createElement('P');
+        const textNode = document.createTextNode('x')
         node.appendChild(textNode);
         target.appendChild(node);
       }
-    }
+    };
+
+    // TODO: clear all cells
+    const clear = () => {
+      console.log('Cleared');
+    };
+
+    // TODO: display reset button
+    const reset = () => {
+      const btnWrapper = document.querySelector('.btn-wrapper');
+      const btn = document.createElement('button');
+      btn.innerHTML = 'reset';
+      btn.addEventListener('click', clear);
+      btnWrapper.appendChild(btn);
+    };
+
+    // TODO: display result alert
 
     // listen for click event on .cell elements
     document.querySelectorAll('.cell').forEach((cell, i) => {
-      cell.addEventListener("click", markCell);
+      cell.addEventListener('click', markCell);
     });
 
-    // TODO: display reset option
-    // TODO: display alert
+    return {
+      reset, markCell
+    }
   }
 
   const Game = () => {
