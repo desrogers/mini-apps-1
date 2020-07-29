@@ -24,9 +24,12 @@
       }
     };
 
-    const traverse = (array) => {
+    const traverse = (array, col) => {
       let hasWin = false;
       array.forEach((row, i) => {
+        if (col) {
+          row = [matrix[0][i], matrix[1][i], matrix[2][i]]
+        }
         const el = row[0];
         if (row.every((item) => item != -1 && item === el)) {
           hasWin = true;
@@ -34,22 +37,10 @@
         };
       });
       return hasWin;
-    }
+    };
 
     const hasRowWin = () => traverse(matrix);
-
-    const hasColWin = () => {
-      let hasWin = false;
-      matrix[0].forEach((col, i) => {
-        const array = [matrix[0][i], matrix[1][i], matrix[2][i]];
-        const el = array[0];
-        if (array.every((item) => item != -1 && item === el)) {
-          hasWin = true;
-          return;
-        }
-      });
-      return hasWin;
-    };
+    const hasColWin = () => traverse(matrix[0], true);
 
     const hasDiagWin = () => {
       const diags = [
@@ -60,16 +51,12 @@
       return traverse(diags);
     };
 
+    // check horizontal, vertical, diagonal
     const detectWin = () => {
-      // check horizontal, vertical, diagonal
       return hasRowWin() || hasColWin() || hasDiagWin();
     }
 
-    const clearBoard = () => {
-      matrix = [
-        [-1,-1,-1],[-1,-1,-1],[-1,-1,-1]
-      ];
-    };
+    const clearBoard = () => { matrix = [ [-1,-1,-1],[-1,-1,-1],[-1,-1,-1] ]; };
 
     return {
       mark, detectWin, clearBoard
@@ -151,7 +138,7 @@
   const View = () => {
     const mark = (target, mark) => {
       const node = document.createElement('P');
-      const textNode = document.createTextNode(mark);
+      const textNode = document.createTextNode(mark.toUpperCase());
       node.appendChild(textNode);
       target.appendChild(node);
     };
