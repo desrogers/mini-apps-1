@@ -46,6 +46,13 @@
   }
 
   const View = () => {
+    const mark = (mark) => {
+      const node = document.createElement('P');
+      const textNode = document.createTextNode(mark);
+      node.appendChild(textNode);
+      target.appendChild(node);
+    };
+
     // clear all cells
     const clear = () => {
       document.querySelectorAll('.cell').forEach((item, i) => {
@@ -75,15 +82,11 @@
       }
     };
     return {
-      clear, reset, alert
+      clear, reset, alert, mark
     }
   }
 
   const Game = () => {
-    const x = Player('x');
-    const o = Player('o');
-
-    x.isTurn = true;
 
     // players keep their scores, unless the entire game/page is refreshed
     const play = () => {
